@@ -14,15 +14,14 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.release>23</maven.compiler.release>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
-      <version>4.8.0</version>
+      <version>4.26.0</version>
     </dependency>
     <dependency>
       <groupId>org.apache.poi</groupId>
@@ -37,7 +36,7 @@
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
-      <version>7.7.1</version>
+      <version>7.9.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -92,4 +91,24 @@
       </plugins>
     </pluginManagement>
   </build>
+
+
+  <dependencyManagement>
+  
+
+    <dependencies>
+
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>31.0.1-jre</version>
+      </dependency>
+
+    
+
+      
+
+    </dependencies>
+
+  </dependencyManagement>
 </project>
