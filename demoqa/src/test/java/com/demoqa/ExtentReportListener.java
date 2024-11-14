@@ -29,12 +29,12 @@ public class ExtentReportListener extends TestListenerAdapter {
     public ExtentReports extent;
     public ExtentTest test;
    // Getter and setter for the driver (if needed)
-   public static WebDriver getDriver() {
+   public static ThreadLocal<WebDriver> getDriver() {
     return driver;
 }
 
 public static void setDriver(WebDriver driver) {
-    ExtentReportListener.driver = driver;
+    ExtentReportListener.getDriver().set(driver);
 }
     @Override
     public void onStart(ITestContext testContext) {
@@ -99,11 +99,14 @@ getName()); // create new entry in the report
         return destination; 
     }
     
-    public static void log(Status status, String message) {
-        test.log(status, message); // Log to the current test
+    public static void log(ITestResult result, Status status, String message) {
+        ExtentTest test = extent.createTest(result.getMethod().getMethodName()); // Get the current test
+        test.log(status, message);
     }
 
-    public static void fail(String message) {
-        test.fail(message); // Optionally fail the current test
+    public static void fail(ITestResult result, String message) {
+        ExtentTest test = extent.createTest(result.getMethod().getMethodName()); // Get the current test
+        test.fail(message);
     }
+
 }

@@ -21,7 +21,13 @@ public class BaseTest
 {
     WebDriver driver; 
     Map<String,String> testData;
-    
+    private ITestResult currentTestResult;
+
+    @AfterMethod
+    public void afterMethod(ITestResult result) {
+        this.currentTestResult = result;
+}
+
     /**
      * This method initializes the web driver, maximizes the browser window,
      * navigates to the specified URL, and sets the driver for the ExtentReportListener.
@@ -68,8 +74,8 @@ public class BaseTest
             return temp;
         } catch (Exception e) {
             printOut("Execption found");
-            ExtentReportListener.log(Status.FAIL, "Exception occurred while loading test data: " + e.getMessage());
-            ExtentReportListener.fail("Data provider failed due to: " + e.getMessage());
+            ExtentReportListener.log(currentTestResult, Status.FAIL, "Exception occurred while loading test data: " + e.getMessage());
+            ExtentReportListener.fail(currentTestResult, "Data provider failed due to: " + e.getMessage());
             e.printStackTrace();
         }
         return null;
