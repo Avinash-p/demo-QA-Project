@@ -25,14 +25,15 @@ public class ExtentReportListener extends TestListenerAdapter {
     public static ExtentSparkReporter htmlReporter;
     public static ExtentReports extent;
     public static ExtentTest test;
-   // Getter and setter for the driver (if needed)
-   public static ThreadLocal<WebDriver> getDriver() {
+    
+    // Getter and setter for the driver (if needed)
+    public static ThreadLocal<WebDriver> getDriver() {
     return driver;
-}
+    }
 
-public static void setDriver(WebDriver driver) {
-    ExtentReportListener.getDriver().set(driver);
-}
+    public static void setDriver(WebDriver driver) {
+        ExtentReportListener.getDriver().set(driver);
+    }
     @Override
     public void onStart(ITestContext testContext) {
         String timeStamp = new Date().toString().replace(":", "_").replace(" ", "_");
@@ -55,13 +56,13 @@ public static void setDriver(WebDriver driver) {
     public void onTestSuccess(ITestResult tr) {
         test = extent.createTest(tr.getName()); // create new entry in the report
         test.log(Status.PASS, MarkupHelper.
-createLabel(tr.getName(), ExtentColor.GREEN)); // send the passed information to the report with GREEN status
+        createLabel(tr.getName(), ExtentColor.GREEN)); // send the passed information to the report with GREEN status
     }
 
     @Override
     public void onTestFailure(ITestResult tr) {
         test = extent.createTest(tr.
-getName()); // create new entry in the report
+        getName()); // create new entry in the report
 
         test.log(Status.FAIL, MarkupHelper.createLabel(tr.getName(), ExtentColor.RED)); 
         test.fail(tr.getThrowable());

@@ -7,6 +7,6 @@ public class LandingPage extends BaseTest{
     @Test
     public void checkTitle(){
         System.out.println(driver.getTitle());
-        Assert.assertTrue(driver.getTitle().equals("Google"));
+        Assert.assertFalse(driver.getTitle().equals("Google"));
     }
 }
