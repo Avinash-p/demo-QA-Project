@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.poi.ss.usermodel.CellType;
+
 import org.apache.poi.xssf.usermodel.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -20,18 +21,31 @@ public class BaseTest
 {
     WebDriver driver; 
     Map<String,String> testData;
+    
+    /**
+     * This method initializes the web driver, maximizes the browser window,
+     * navigates to the specified URL, and sets the driver for the ExtentReportListener.
+     */
     @BeforeClass
     public void start(){
         driver = new ChromeDriver(new ChromeOptions());
         driver.manage().window().maximize();
         driver.get("https://demoqa.com/text-box");
+        ExtentReportListener.setDriver(driver);
     }
 
+    /**
+     * This method quits the web driver, closing the browser window.
+     */
     @AfterClass
     public void tearDown(){
         driver.quit();
     }
 
+    /**
+     * This method provides test data from an Excel file.
+     * @return A Map containing test data, where keys are column headers and values are cell values.
+     */
     @DataProvider(name = "Test Data Provider")
     public Map<String, String> getTestData(){
         Map<String,String> temp = new HashMap<String, String>();
@@ -54,10 +68,18 @@ public class BaseTest
             return temp;
         } catch (Exception e) {
             printOut("Execption found");
+            ExtentReportListener.log(Status.ERROR, "Exception occurred while loading test data: " + e.getMessage());
+            ExtentReportListener.fail("Data provider failed due to: " + e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }
 
+    /**
+     * This method retrieves the value of an XSSFCell.
+     * @param x The XSSFCell to retrieve the value from.
+     * @return The value of the cell as a String.
+     */
     public String getValue(XSSFCell x){
         if (x.getCellType() == CellType.NUMERIC){
             return Double.toString(x.getNumericCellValue());
@@ -66,25 +88,13 @@ public class BaseTest
         }
         return null;
     }
-
-    @Test
-    public void shouldAnswerWithTrue()
-    {
-        testData = getTestData();
-        String testDataString = testData.toString();
-        Assert.assertTrue( true );
-        By textArea = By.xpath("(//textarea)[1]");
-        driver.findElement(textArea).sendKeys(testDataString);
-    }
-
+    
+    /**
+     * This method enters text into a text area element on the web page.
+     * @param x The text to be entered.
+     */
     public void printOut(String x){
         By textArea = By.xpath("(//textarea)[1]");
         driver.findElement(textArea).sendKeys(x);
-    }
-
-    @Test
-    public void shouldAnswerWithFalse(){
-        Assert.assertFalse(false);
-        System.out.println("hi");
     }
 }
