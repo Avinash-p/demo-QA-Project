@@ -1,6 +1,8 @@
 package com.demoqa;
 
+import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 
@@ -36,7 +38,7 @@ public class BaseTest
     public void start(){
         driver = new ChromeDriver(new ChromeOptions());
         driver.manage().window().maximize();
-        driver.get("https://demoqa.com/text-box");
+        driver.get("https://www.google.com/");
         ExtentReportListener.setDriver(driver);
     }
 

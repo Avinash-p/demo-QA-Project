@@ -17,17 +17,14 @@ import org.testng.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 public class ExtentReportListener extends TestListenerAdapter {
     private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
-    public ExtentSparkReporter htmlReporter;
-    public ExtentReports extent;
-    public ExtentTest test;
+    public static ExtentSparkReporter htmlReporter;
+    public static ExtentReports extent;
+    public static ExtentTest test;
    // Getter and setter for the driver (if needed)
    public static ThreadLocal<WebDriver> getDriver() {
     return driver;
