@@ -3,8 +3,6 @@ package com.demoqa;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
-import org.testng.Assert;
 
 import java.io.FileInputStream;
 import java.util.HashMap;
@@ -16,6 +14,8 @@ import org.apache.poi.xssf.usermodel.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.*;
+
+import com.aventstack.extentreports.Status;
 
 public class BaseTest 
 {
@@ -68,7 +68,7 @@ public class BaseTest
             return temp;
         } catch (Exception e) {
             printOut("Execption found");
-            ExtentReportListener.log(Status.ERROR, "Exception occurred while loading test data: " + e.getMessage());
+            ExtentReportListener.log(Status.FAIL, "Exception occurred while loading test data: " + e.getMessage());
             ExtentReportListener.fail("Data provider failed due to: " + e.getMessage());
             e.printStackTrace();
         }
