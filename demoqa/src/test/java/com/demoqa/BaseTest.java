@@ -19,6 +19,7 @@ import org.openqa.selenium.chrome.*;
 
 import com.aventstack.extentreports.Status;
 
+@Listeners(ExtentReportListener.class)
 public class BaseTest 
 {
     WebDriver driver; 
