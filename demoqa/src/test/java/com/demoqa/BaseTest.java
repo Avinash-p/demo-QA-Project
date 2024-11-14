@@ -2,8 +2,8 @@ package com.demoqa;
 
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 
@@ -14,7 +14,6 @@ import java.util.Map;
 import org.apache.poi.ss.usermodel.CellType;
 
 import org.apache.poi.xssf.usermodel.*;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.*;
 
@@ -27,10 +26,10 @@ public class BaseTest
     Map<String,String> testData;
     private ITestResult currentTestResult;
 
-    @AfterMethod
+    @BeforeMethod
     public void afterMethod(ITestResult result) {
         this.currentTestResult = result;
-}
+    }
 
     /**
      * This method initializes the web driver, maximizes the browser window,
@@ -77,12 +76,19 @@ public class BaseTest
             file.close();
             return temp;
         } catch (Exception e) {
-            printOut("Execption found");
-            ExtentReportListener.log(currentTestResult, Status.FAIL, "Exception occurred while loading test data: " + e.getMessage());
-            ExtentReportListener.fail(currentTestResult, "Data provider failed due to: " + e.getMessage());
+            reportLog("Exception occurred while loading test data: " + e.getMessage());
+            failTest("Data provider failed due to: " + e.getMessage());
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void reportLog(String text){
+        ExtentReportListener.log(currentTestResult, Status.INFO, text);
+    }
+
+    public void failTest(String reason){
+        ExtentReportListener.fail(currentTestResult, reason);
     }
 
     /**
@@ -103,8 +109,4 @@ public class BaseTest
      * This method enters text into a text area element on the web page.
      * @param x The text to be entered.
      */
-    public void printOut(String x){
-        By textArea = By.xpath("(//textarea)[1]");
-        driver.findElement(textArea).sendKeys(x);
-    }
 }
