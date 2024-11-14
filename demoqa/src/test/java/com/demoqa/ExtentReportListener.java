@@ -89,7 +89,7 @@ public class ExtentReportListener extends TestListenerAdapter {
 
     // Method to capture screenshot
     public static String captureScreenshot(String testName) throws IOException {
-        TakesScreenshot ts = (TakesScreenshot) driver; // Cast driver
+        TakesScreenshot ts = (TakesScreenshot) ((ThreadLocal<?>) driver).get();
         File source = ts.getScreenshotAs(OutputType.FILE);
         String destination = System.getProperty("user.dir") + "/screenshots/" + testName + ".png";
         File finalDestination = new File(destination);
